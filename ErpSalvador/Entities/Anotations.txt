@@ -1,0 +1,10 @@
+﻿Anotações gerais de entities
+
+Classes que abstraem das necessidades do ERP
+
+01. Recursos Humanos:
+Funcionario
+Departamento
+EnderecoFuncionario
+Beneficio
+Funcao
