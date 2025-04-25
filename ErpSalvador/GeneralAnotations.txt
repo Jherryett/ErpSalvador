@@ -1,0 +1,18 @@
+﻿Os nomes dos métodos seguem uma lógica.
+
+Semprecomeça com a função que ela faz e mantém o nome da classe entidade ela trabalha
+
+Exemplo:
+classe entidade: Funcionario
+metodo do controller: GetFuncionario ou PostFuncionario (Mantém os verbos HTTP)
+metodo do service: CriarFuncionario ou AtualizarFuncionario (Usa os termos do CRUD em português)
+método do repository: CreateFuncionario ou UpdateFuncionario (Matém os termos em inglês)
+
+Logo fica assim:
+
+Controller - Service - Repository
+
+Post - Criar - Create
+Get - Ler - Read
+Put - Atualizar - Update
+Delete - Apagar - delete

@@ -3,13 +3,13 @@
 namespace ErpSalvador.Repositories;
 public class EnderecoFuncionarioRepository : IEnderecoFuncionarioRepository
 {
-    public void CreateEnderecoFuncionario() { }
+    public void CreateEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal) { }
 
-    public void ReadEnderecoFuncionario() { }
+    public void ReadEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal) { }
 
-    public void UpdateEnderecoFuncionario() { }
+    public void UpdateEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal) { }
 
-    public void DeleteEnderecoFuncionario() { }
+    public void DeleteEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal) { }
 
 
 };

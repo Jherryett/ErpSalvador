@@ -2,10 +2,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<SystemContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoPadrao")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoPadrao"))); // conexão do banco de dados
 
 
 builder.Services.AddControllers();
+
+builder.Services.AddScoped<IEnderecoFuncionarioRepository, EnderecoFuncionarioRepository>();
+builder.Services.AddScoped<IEnderecoFuncionarioService, EnderecoFuncionarioService>();
+
+
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
