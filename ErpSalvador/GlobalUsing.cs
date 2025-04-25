@@ -1,8 +1,8 @@
 ﻿// Bibliotecas do .NET padrão
 
 global using System;
-global using Microsoft.AspNetCore.Mvc;
-
+global using Microsoft.AspNetCore.Mvc; // Desenvolvimento Web APIs
+global using Microsoft.Extensions.DependencyInjection; // Fazer as injeções de dependências do sistema
 
 
 
@@ -34,7 +34,10 @@ global using Microsoft.EntityFrameworkCore.SqlServer; // dotnet add package Micr
 // Arquivos de código (Classes, Entidades)
 
 global using ErpSalvador.Entities;
+global using ErpSalvador.Services;
 global using ErpSalvador.Context;
+global using ErpSalvador.Repositories;
+global using ErpSalvador.Interfaces;
 
 
 
