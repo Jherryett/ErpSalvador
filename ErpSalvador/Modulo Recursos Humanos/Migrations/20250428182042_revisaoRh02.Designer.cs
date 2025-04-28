@@ -4,6 +4,7 @@ using ErpSalvador.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ErpSalvador.Migrations
 {
     [DbContext(typeof(SystemContext))]
-    partial class SystemContextModelSnapshot : ModelSnapshot
+    [Migration("20250428182042_revisaoRh02")]
+    partial class revisaoRh02
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,9 +36,6 @@ namespace ErpSalvador.Migrations
                     b.Property<string>("Descritivo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("IdFuncionario")
-                        .HasColumnType("int");
-
                     b.Property<string>("NomeBeneficio")
                         .HasColumnType("nvarchar(max)");
 
@@ -44,8 +44,6 @@ namespace ErpSalvador.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdFuncionario");
 
                     b.ToTable("Beneficios");
                 });
@@ -86,9 +84,6 @@ namespace ErpSalvador.Migrations
                     b.Property<DateTime>("DataCadastro")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("IdFuncionario")
-                        .HasColumnType("int");
-
                     b.Property<string>("NomeBairro")
                         .HasColumnType("nvarchar(max)");
 
@@ -105,10 +100,6 @@ namespace ErpSalvador.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdFuncionario")
-                        .IsUnique()
-                        .HasFilter("[IdFuncionario] IS NOT NULL");
 
                     b.ToTable("EnderecoFuncionarios");
                 });
@@ -155,7 +146,13 @@ namespace ErpSalvador.Migrations
                     b.Property<string>("Email2")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("IdBeneficio")
+                        .HasColumnType("int");
+
                     b.Property<int?>("IdDepartamento")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdEnderecoFuncionario")
                         .HasColumnType("int");
 
                     b.Property<string>("NomeCompleto")
@@ -175,48 +172,7 @@ namespace ErpSalvador.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdDepartamento");
-
                     b.ToTable("Funcionarios");
-                });
-
-            modelBuilder.Entity("ErpSalvador.Entities.Beneficio", b =>
-                {
-                    b.HasOne("ErpSalvador.Entities.Funcionario", "Funcionario")
-                        .WithMany("Beneficios")
-                        .HasForeignKey("IdFuncionario");
-
-                    b.Navigation("Funcionario");
-                });
-
-            modelBuilder.Entity("ErpSalvador.Entities.EnderecoFuncionario", b =>
-                {
-                    b.HasOne("ErpSalvador.Entities.Funcionario", "Funcionario")
-                        .WithOne("EnderecoFuncionarios")
-                        .HasForeignKey("ErpSalvador.Entities.EnderecoFuncionario", "IdFuncionario");
-
-                    b.Navigation("Funcionario");
-                });
-
-            modelBuilder.Entity("ErpSalvador.Entities.Funcionario", b =>
-                {
-                    b.HasOne("ErpSalvador.Entities.Departamento", "Departamentos")
-                        .WithMany("Funcionarios")
-                        .HasForeignKey("IdDepartamento");
-
-                    b.Navigation("Departamentos");
-                });
-
-            modelBuilder.Entity("ErpSalvador.Entities.Departamento", b =>
-                {
-                    b.Navigation("Funcionarios");
-                });
-
-            modelBuilder.Entity("ErpSalvador.Entities.Funcionario", b =>
-                {
-                    b.Navigation("Beneficios");
-
-                    b.Navigation("EnderecoFuncionarios");
                 });
 #pragma warning restore 612, 618
         }

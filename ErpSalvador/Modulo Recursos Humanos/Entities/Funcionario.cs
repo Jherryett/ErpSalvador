@@ -3,8 +3,8 @@
     public class Funcionario
     {
         public int? Id { get; set; }
-        public int? IdEnderecoFuncionario { get; set; }
-        public int? IdBeneficio { get; set; }
+        public int? IdDepartamento { get; set; }
+
         public string? NomeCompleto { get; set; }
         public DateOnly? DataNascimento { get; set; }
         public string? RgFuncionario { get; set; }
@@ -15,14 +15,18 @@
         public string? Email2 { get; set; }
         public string? Observacoes { get; set; }
 
+        [ForeignKey("IdDepartamento")]  public Departamento? Departamentos { get; set; } // Propriedade de navegação do Entity framework
+        public EnderecoFuncionario? EnderecoFuncionarios { get; set; }
+        public ICollection<Beneficio>? Beneficios { get; set; }
+
+
         public Funcionario() { }
 
-        public Funcionario(int id, int idEnderecoFuncionario, int idBeneficio, string nomeCompleto, DateOnly dataNascimento,
+        public Funcionario(int id, int idDepartamento, string nomeCompleto, DateOnly dataNascimento,
             string rgFuncionario, string cpfFuncionario, string telefone1, string telefone2, string email1, string email2, string observacoes)
         {
             Id = id;
-            IdEnderecoFuncionario = idEnderecoFuncionario;
-            IdBeneficio = idBeneficio;
+            IdDepartamento = idDepartamento;
             NomeCompleto = nomeCompleto;
             DataNascimento = dataNascimento;
             RgFuncionario = rgFuncionario;

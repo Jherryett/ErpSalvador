@@ -1,6 +1,4 @@
-﻿using ErpSalvador.Interfaces;
-
-namespace ErpSalvador.Repositories;
+﻿namespace ErpSalvador.Repositories;
 public class EnderecoFuncionarioRepository : IEnderecoFuncionarioRepository
 {
     public void CreateEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal) { }

@@ -3,7 +3,7 @@
 global using System;
 global using Microsoft.AspNetCore.Mvc; // Desenvolvimento Web APIs
 global using Microsoft.Extensions.DependencyInjection; // Fazer as injeções de dependências do sistema
-
+global using System.ComponentModel.DataAnnotations.Schema; // Para poder indicar explicitamente quem é a foregin key nas tabelas
 
 
 
