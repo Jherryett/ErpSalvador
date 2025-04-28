@@ -1,13 +1,37 @@
-﻿namespace ErpSalvador.Repositories;
+﻿
+namespace ErpSalvador.Repositories;
 public class EnderecoFuncionarioRepository : IEnderecoFuncionarioRepository
 {
-    public void CreateEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal) { }
 
-    public void ReadEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal) { }
+    private readonly SystemContext _context;
 
-    public void UpdateEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal) { }
+    public EnderecoFuncionarioRepository(SystemContext context) // construtor
+    {
+        _context = context;
+    }
 
-    public void DeleteEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal) { }
 
+    public void CreateEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal)
+    {
+        _context.EnderecoFuncionarios.Add(enderecoFuncionarioFinal);
+        _context.SaveChanges();
+    }
+
+    public EnderecoFuncionario? ReadEnderecoFuncionario(int id)
+    {
+        return _context.EnderecoFuncionarios.Find(id);
+    }
+
+    public bool UpdateEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal)
+    {
+        _context.EnderecoFuncionarios.Update(enderecoFuncionarioFinal);
+        return _context.SaveChanges() > 0;
+    }
+    public bool DeleteEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal)
+    {
+        _context.EnderecoFuncionarios.Remove(enderecoFuncionarioFinal);
+        return _context.SaveChanges() > 0;
+
+    }
 
 };

@@ -1,6 +1,4 @@
-﻿using ErpSalvador.Interfaces;
-using Microsoft.IdentityModel.Tokens;
-
+﻿
 namespace ErpSalvador.Services
 {
     public class EnderecoFuncionarioService : IEnderecoFuncionarioService
@@ -37,17 +35,37 @@ namespace ErpSalvador.Services
             _enderecoFuncionarioRepository.CreateEnderecoFuncionario(enderecoFuncionario);
         }
 
-
-
-        public void AtualizarEnderecoFuncionario(EnderecoFuncionario enderecoFuncionario)
+        public EnderecoFuncionario LerEnderecoFuncionario(EnderecoFuncionario enderecoFuncionario)
         {
-            ValidarEnderecoFuncionario(enderecoFuncionario);
+            var buscandoEndereco = _enderecoFuncionarioRepository.ReadEnderecoFuncionario(enderecoFuncionario.Id.Value);
 
-            _enderecoFuncionarioRepository.UpdateEnderecoFuncionario(enderecoFuncionario);
+            if (buscandoEndereco == null)
+            {
+                throw new ArgumentException("Registro não encontrado");
+            }
+
+            else
+            {
+                return buscandoEndereco;
+            }
+
         }
 
 
+        public bool AtualizarEnderecoFuncionario(EnderecoFuncionario enderecoFuncionario)
+        {
+            ValidarEnderecoFuncionario(enderecoFuncionario);
 
+            bool RetornoOperacao = _enderecoFuncionarioRepository.UpdateEnderecoFuncionario(enderecoFuncionario);
+            return RetornoOperacao;
+        }
+
+
+        public bool ApagarEnderecoFuncionario(EnderecoFuncionario enderecoFuncionario)
+        {
+            bool RetornoOperacao = _enderecoFuncionarioRepository.DeleteEnderecoFuncionario(enderecoFuncionario);
+            return RetornoOperacao;
+        }
 
 
 

@@ -3,9 +3,9 @@
     public interface IEnderecoFuncionarioRepository
     {
         void CreateEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal) { }
-        void ReadEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal) { }
-        void UpdateEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal) { }
-        void DeleteEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal) { }
+        EnderecoFuncionario? ReadEnderecoFuncionario(int id);
+        bool UpdateEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal);
+        bool DeleteEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal);
 
     }
 }
