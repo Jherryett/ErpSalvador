@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace ErpSalvador.Services
 {
     public class EnderecoFuncionarioService : IEnderecoFuncionarioService
@@ -51,6 +53,18 @@ namespace ErpSalvador.Services
 
         }
 
+        public IEnumerable<EnderecoFuncionario> LerTodosOsEnderecosFuncionarios() 
+        {
+            var todosOsEnderecos = _enderecoFuncionarioRepository.ReadAllEnderecoFuncionario();
+            return todosOsEnderecos;
+        } 
+
+
+
+
+
+
+
 
         public bool AtualizarEnderecoFuncionario(EnderecoFuncionario enderecoFuncionario)
         {
@@ -66,10 +80,6 @@ namespace ErpSalvador.Services
             bool RetornoOperacao = _enderecoFuncionarioRepository.DeleteEnderecoFuncionario(enderecoFuncionario);
             return RetornoOperacao;
         }
-
-
-
-
 
     }
 }

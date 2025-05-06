@@ -15,4 +15,4 @@ Controller - Service - Repository
 Post - Criar - Create
 Get - Ler - Read
 Put - Atualizar - Update
-Delete - Apagar - delete
+Delete - Apagar - Delete

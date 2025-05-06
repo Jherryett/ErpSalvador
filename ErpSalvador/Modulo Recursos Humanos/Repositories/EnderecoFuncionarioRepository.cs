@@ -21,6 +21,11 @@ public class EnderecoFuncionarioRepository : IEnderecoFuncionarioRepository
     {
         return _context.EnderecoFuncionarios.Find(id);
     }
+    
+    public IEnumerable<EnderecoFuncionario> ReadAllEnderecoFuncionario()
+    {
+        return _context.EnderecoFuncionarios;
+    }
 
     public bool UpdateEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal)
     {
