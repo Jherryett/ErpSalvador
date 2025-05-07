@@ -9,7 +9,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<IEnderecoFuncionarioRepository, EnderecoFuncionarioRepository>();
 builder.Services.AddScoped<IEnderecoFuncionarioService, EnderecoFuncionarioService>();
-
+builder.Services.AddScoped<IBeneficioService, BeneficioService>();
+builder.Services.AddScoped<IBeneficioRepository, BeneficioRepository>();
 
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
