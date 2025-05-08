@@ -25,9 +25,9 @@
             await _beneficioRepository.CreateBeneficioAsync(beneficio);
         }
 
-        public async Task<Beneficio> LerBeneficio(Beneficio beneficio)
+        public async Task<Beneficio> LerBeneficio(int id)
         {
-            var buscandoBeneficio = _beneficioRepository.ReadBeneficioAsync(beneficio.Id.Value);
+            var buscandoBeneficio = _beneficioRepository.ReadBeneficioAsync(id);
 
             if (buscandoBeneficio == null)
             {
@@ -53,9 +53,9 @@
             return await retornoOperacao;
         }
 
-        public async Task<bool> ApagarBeneficio(Beneficio beneficio)
+        public async Task<bool> ApagarBeneficio(int id)
         {
-            Task<bool> retornoOperacao = _beneficioRepository.DeleteBeneficioAsync(beneficio);
+            Task<bool> retornoOperacao = _beneficioRepository.DeleteBeneficioAsync(id);
             return await retornoOperacao;
         }
     }

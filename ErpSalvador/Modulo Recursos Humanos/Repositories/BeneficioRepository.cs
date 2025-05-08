@@ -31,9 +31,10 @@
             return await _context.SaveChangesAsync() > 0;        
         }
 
-        public async Task<bool> DeleteBeneficioAsync(Beneficio beneficio) 
+        public async Task<bool> DeleteBeneficioAsync(int id) 
         {
-            _context.Beneficios.Remove(beneficio);
+            Beneficio beneficioParaApagar = await _context.Beneficios.FindAsync(id);          
+            _context.Beneficios.Remove(beneficioParaApagar);
             return await _context.SaveChangesAsync() > 0;        
         }
 
