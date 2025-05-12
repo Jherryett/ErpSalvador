@@ -5,7 +5,7 @@
         public int? Id { get; set; }
         public int? IdDepartamento { get; set; }
 
-        public string? NomeCompleto { get; set; }
+        public string? NomeFuncionario { get; set; }
         public DateOnly? DataNascimento { get; set; }
         public string? RgFuncionario { get; set; }
         public string? CpfFuncionario { get; set; }
@@ -27,7 +27,7 @@
         {
             Id = id;
             IdDepartamento = idDepartamento;
-            NomeCompleto = nomeCompleto;
+            NomeFuncionario = nomeCompleto;
             DataNascimento = dataNascimento;
             RgFuncionario = rgFuncionario;
             CpfFuncionario = cpfFuncionario;

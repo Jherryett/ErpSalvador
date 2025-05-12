@@ -1,20 +1,19 @@
-﻿
-namespace ErpSalvador.Controllers
+﻿namespace ErpSalvador.Controllers
 {
     [ApiController]
-    [Route("api/beneficios")]
+    [Route("api/funcao")]
 
-    public class BeneficioController : ControllerBase
+    public class FuncaoController : ControllerBase
     {
-        private readonly IBeneficioService _beneficioService;
+        private readonly IFuncaoService _funcaoService;
 
-        public BeneficioController(IBeneficioService beneficioService)
+        public FuncaoController(IFuncaoService funcaoService)
         {
-            _beneficioService = beneficioService;
+            _funcaoService = funcaoService;
         }
 
-        [HttpPost("Adicionar")]
-        public async Task<IActionResult> AdicionarBeneficio([FromBody] Beneficio beneficio)
+        [HttpPost("adicionar")]
+        public async Task<IActionResult> PostFuncaoAsync([FromBody] Funcao funcao)
         {
             if (!ModelState.IsValid)
             {
@@ -23,7 +22,7 @@ namespace ErpSalvador.Controllers
 
             try
             {
-                await _beneficioService.CriarBeneficio(beneficio);
+                await _funcaoService.CriarFuncaoAsync(funcao);
                 return StatusCode(StatusCodes.Status201Created);
             }
 
@@ -33,15 +32,15 @@ namespace ErpSalvador.Controllers
             }
         }
 
-        [HttpGet("Obter")]
-        public async Task<IActionResult> ObterBeneficio(int id)
+        [HttpGet("obter/{id}")]
+        public async Task<IActionResult> GetFuncaoAsync(int id)
         {
 
             try
             {
-                Beneficio beneficioFinal = await _beneficioService.LerBeneficio(id);
+                Funcao funcaoFinal = await _funcaoService.LerFuncaoAsync(id);
 
-                return Ok(beneficioFinal);
+                return Ok(funcaoFinal);
             }
             catch (Exception ex)
             {
@@ -49,12 +48,12 @@ namespace ErpSalvador.Controllers
             }
         }
 
-        [HttpGet("ObterTodos")]
-        public async Task<ActionResult<IEnumerable<Beneficio>>> LerTodosOsBeneficios()
+        [HttpGet("obter-todos")]
+        public async Task<ActionResult<IEnumerable<Funcao>>> GetAllFuncaoAsync()
         {
             try
             {
-                IEnumerable<Beneficio> todosOsRegistros = await _beneficioService.LerTodosOsBeneficios();
+                IEnumerable<Funcao> todosOsRegistros = await _funcaoService.LerTodasAsFuncoesAsync();
                 return Ok(todosOsRegistros);
             }
             catch (Exception ex)
@@ -63,16 +62,16 @@ namespace ErpSalvador.Controllers
             }
         }
 
-        [HttpPut("Atualizar")]
-        public async Task <IActionResult> AtualizarBeneficio([FromBody] Beneficio beneficio) 
+        [HttpPut("atualizar")]
+        public async Task <IActionResult> UpdateFuncaoAsync([FromBody] Funcao funcao) 
         {
-            if (beneficio == null)
+            if (funcao == null)
                 return BadRequest(ModelState);
 
             try
             {
-                await _beneficioService.AtualizarBeneficio(beneficio);
-                return Ok(beneficio);
+                await _funcaoService.AtualizarFuncaoAsync(funcao);
+                return Ok(funcao);
             }
 
             catch (Exception ex)
@@ -82,16 +81,16 @@ namespace ErpSalvador.Controllers
         }
 
         
-        [HttpDelete("Apagar/{id}")] // É necessário receber o id na URL, porque quando se trata de apagar/delete, o APS.NET não converte um dado só do corpo, igual ocorre com uma atualização/Put, questão de bidding
+        [HttpDelete("apagar/{id}")] // É necessário receber o id na URL, porque quando se trata de apagar/delete, o APS.NET não converte um dado só do corpo, igual ocorre com uma atualização/Put, questão de bidding
                 
-        public async Task <IActionResult> ApagarBeneficio(int id ) 
+        public async Task <IActionResult> DeleteFuncaoAsync(int id ) 
         {
             if(id <= 0)
                 return BadRequest(ModelState);
 
             try 
             {                
-                await _beneficioService.ApagarBeneficio(id);
+                await _funcaoService.ApagarFuncaoAsync(id);
                 return NoContent();
             }
 

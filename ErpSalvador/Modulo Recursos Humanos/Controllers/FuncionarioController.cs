@@ -1,20 +1,19 @@
-﻿
-namespace ErpSalvador.Controllers
+﻿namespace ErpSalvador.Controllers
 {
     [ApiController]
-    [Route("api/beneficios")]
+    [Route("api/funcionario")]
 
-    public class BeneficioController : ControllerBase
+    public class FuncionarioController : ControllerBase
     {
-        private readonly IBeneficioService _beneficioService;
+        private readonly IFuncionarioService _funcionarioService;
 
-        public BeneficioController(IBeneficioService beneficioService)
+        public FuncionarioController(IFuncionarioService funcionarioService)
         {
-            _beneficioService = beneficioService;
+            _funcionarioService = funcionarioService;
         }
 
-        [HttpPost("Adicionar")]
-        public async Task<IActionResult> AdicionarBeneficio([FromBody] Beneficio beneficio)
+        [HttpPost("adicionar")]
+        public async Task<IActionResult> PostFuncionarioAsync([FromBody] Funcionario funcionario)
         {
             if (!ModelState.IsValid)
             {
@@ -23,7 +22,7 @@ namespace ErpSalvador.Controllers
 
             try
             {
-                await _beneficioService.CriarBeneficio(beneficio);
+                await _funcionarioService.CriarFuncionarioAsync(funcionario);
                 return StatusCode(StatusCodes.Status201Created);
             }
 
@@ -33,15 +32,15 @@ namespace ErpSalvador.Controllers
             }
         }
 
-        [HttpGet("Obter")]
-        public async Task<IActionResult> ObterBeneficio(int id)
+        [HttpGet("obter/{id}")]
+        public async Task<IActionResult> GetFuncionarioAsync(int id)
         {
 
             try
             {
-                Beneficio beneficioFinal = await _beneficioService.LerBeneficio(id);
+                Funcionario funcionarioFinal = await _funcionarioService.LerFuncionarioAsync(id);
 
-                return Ok(beneficioFinal);
+                return Ok(funcionarioFinal);
             }
             catch (Exception ex)
             {
@@ -49,12 +48,12 @@ namespace ErpSalvador.Controllers
             }
         }
 
-        [HttpGet("ObterTodos")]
-        public async Task<ActionResult<IEnumerable<Beneficio>>> LerTodosOsBeneficios()
+        [HttpGet("obter-todos")]
+        public async Task<ActionResult<IEnumerable<Funcionario>>> GetAllFuncionarioAsync()
         {
             try
             {
-                IEnumerable<Beneficio> todosOsRegistros = await _beneficioService.LerTodosOsBeneficios();
+                IEnumerable<Funcionario> todosOsRegistros = await _funcionarioService.LerTodosOsFuncionariosAsync();
                 return Ok(todosOsRegistros);
             }
             catch (Exception ex)
@@ -63,16 +62,16 @@ namespace ErpSalvador.Controllers
             }
         }
 
-        [HttpPut("Atualizar")]
-        public async Task <IActionResult> AtualizarBeneficio([FromBody] Beneficio beneficio) 
+        [HttpPut("atualizar")]
+        public async Task <IActionResult> UpdateFuncionarioAsync([FromBody] Funcionario funcionario) 
         {
-            if (beneficio == null)
+            if (funcionario == null)
                 return BadRequest(ModelState);
 
             try
             {
-                await _beneficioService.AtualizarBeneficio(beneficio);
-                return Ok(beneficio);
+                await _funcionarioService.AtualizarFuncionarioAsync(funcionario);
+                return Ok(funcionario);
             }
 
             catch (Exception ex)
@@ -82,16 +81,16 @@ namespace ErpSalvador.Controllers
         }
 
         
-        [HttpDelete("Apagar/{id}")] // É necessário receber o id na URL, porque quando se trata de apagar/delete, o APS.NET não converte um dado só do corpo, igual ocorre com uma atualização/Put, questão de bidding
+        [HttpDelete("apagar/{id}")] // É necessário receber o id na URL, porque quando se trata de apagar/delete, o APS.NET não converte um dado só do corpo, igual ocorre com uma atualização/Put, questão de bidding
                 
-        public async Task <IActionResult> ApagarBeneficio(int id ) 
+        public async Task <IActionResult> DeleteFuncionarioAsync(int id ) 
         {
             if(id <= 0)
                 return BadRequest(ModelState);
 
             try 
             {                
-                await _beneficioService.ApagarBeneficio(id);
+                await _funcionarioService.ApagarFuncionarioAsync(id);
                 return NoContent();
             }
 
@@ -100,10 +99,6 @@ namespace ErpSalvador.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex + "Ocorreu um erro interno");
             }
         }
-
-
-
-
 
     }
 }

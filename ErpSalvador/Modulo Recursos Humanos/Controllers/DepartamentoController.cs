@@ -1,20 +1,19 @@
-﻿
-namespace ErpSalvador.Controllers
+﻿namespace ErpSalvador.Controllers
 {
     [ApiController]
-    [Route("api/beneficios")]
+    [Route("api/departamento")]
 
-    public class BeneficioController : ControllerBase
+    public class DepartamentoController : ControllerBase
     {
-        private readonly IBeneficioService _beneficioService;
+        private readonly IDepartamentoService _departamentoService;
 
-        public BeneficioController(IBeneficioService beneficioService)
+        public DepartamentoController(IDepartamentoService departamentoService)
         {
-            _beneficioService = beneficioService;
+            _departamentoService = departamentoService;
         }
 
-        [HttpPost("Adicionar")]
-        public async Task<IActionResult> AdicionarBeneficio([FromBody] Beneficio beneficio)
+        [HttpPost("adicionar")]
+        public async Task<IActionResult> PostDepartamentoAsync([FromBody] Departamento departamento)
         {
             if (!ModelState.IsValid)
             {
@@ -23,7 +22,7 @@ namespace ErpSalvador.Controllers
 
             try
             {
-                await _beneficioService.CriarBeneficio(beneficio);
+                await _departamentoService.CriarDepartamentoAsync(departamento);
                 return StatusCode(StatusCodes.Status201Created);
             }
 
@@ -33,15 +32,15 @@ namespace ErpSalvador.Controllers
             }
         }
 
-        [HttpGet("Obter")]
-        public async Task<IActionResult> ObterBeneficio(int id)
+        [HttpGet("obter/{id}")]
+        public async Task<IActionResult> GetDepartamentoAsync(int id)
         {
 
             try
             {
-                Beneficio beneficioFinal = await _beneficioService.LerBeneficio(id);
+                Departamento departamentoFinal = await _departamentoService.LerDepartamentoAsync(id);
 
-                return Ok(beneficioFinal);
+                return Ok(departamentoFinal);
             }
             catch (Exception ex)
             {
@@ -49,12 +48,12 @@ namespace ErpSalvador.Controllers
             }
         }
 
-        [HttpGet("ObterTodos")]
-        public async Task<ActionResult<IEnumerable<Beneficio>>> LerTodosOsBeneficios()
+        [HttpGet("obter-todos")]
+        public async Task<ActionResult<IEnumerable<Departamento>>> GetAllDepartamentosAsync()
         {
             try
             {
-                IEnumerable<Beneficio> todosOsRegistros = await _beneficioService.LerTodosOsBeneficios();
+                IEnumerable<Departamento> todosOsRegistros = await _departamentoService.LerTodosOsDepartamentosAsync();
                 return Ok(todosOsRegistros);
             }
             catch (Exception ex)
@@ -63,16 +62,16 @@ namespace ErpSalvador.Controllers
             }
         }
 
-        [HttpPut("Atualizar")]
-        public async Task <IActionResult> AtualizarBeneficio([FromBody] Beneficio beneficio) 
+        [HttpPut("atualizar")]
+        public async Task <IActionResult> UpdateDepartamentoAsync([FromBody] Departamento departamento) 
         {
-            if (beneficio == null)
+            if (departamento == null)
                 return BadRequest(ModelState);
 
             try
             {
-                await _beneficioService.AtualizarBeneficio(beneficio);
-                return Ok(beneficio);
+                await _departamentoService.AtualizarDepartamentoAsync(departamento);
+                return Ok(departamento);
             }
 
             catch (Exception ex)
@@ -82,16 +81,16 @@ namespace ErpSalvador.Controllers
         }
 
         
-        [HttpDelete("Apagar/{id}")] // É necessário receber o id na URL, porque quando se trata de apagar/delete, o APS.NET não converte um dado só do corpo, igual ocorre com uma atualização/Put, questão de bidding
+        [HttpDelete("apagar/{id}")] // É necessário receber o id na URL, porque quando se trata de apagar/delete, o APS.NET não converte um dado só do corpo, igual ocorre com uma atualização/Put, questão de bidding
                 
-        public async Task <IActionResult> ApagarBeneficio(int id ) 
+        public async Task <IActionResult> DeleteDepartamentoAsync(int id ) 
         {
             if(id <= 0)
                 return BadRequest(ModelState);
 
             try 
             {                
-                await _beneficioService.ApagarBeneficio(id);
+                await _departamentoService.ApagarDepartamentoAsync(id);
                 return NoContent();
             }
 
