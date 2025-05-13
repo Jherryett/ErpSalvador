@@ -2,11 +2,11 @@
 {
     public interface IEnderecoFuncionarioRepository
     {
-        void CreateEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal) { }
-        EnderecoFuncionario ReadEnderecoFuncionario(int id);
-        IEnumerable<EnderecoFuncionario> ReadAllEnderecoFuncionario();
-        bool UpdateEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal);
-        bool DeleteEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal);
+        Task<EnderecoFuncionario> CreateEnderecoFuncionarioAsync(EnderecoFuncionario enderecoFuncionarioFinal);
+        Task<EnderecoFuncionario> ReadEnderecoFuncionarioAsync(int id);
+        Task <IEnumerable<EnderecoFuncionario>> ReadAllEnderecoFuncionarioAsync();
+        Task<EnderecoFuncionario> UpdateEnderecoFuncionarioAsync(EnderecoFuncionario enderecoFuncionarioFinal);
+        Task <bool> DeleteEnderecoFuncionarioAsync(int id);
 
     }
 }

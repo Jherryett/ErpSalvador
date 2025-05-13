@@ -1,7 +1,7 @@
 ﻿namespace ErpSalvador.Controllers
 {
     [ApiController]
-    [Route("api/enderecos-funcionarios")]
+    [Route("api/endereco-funcionarios")]
     public class EnderecoFuncionarioController : ControllerBase // O controller não precisa de uma interface, pois o ASP net já faz isso, 
     {
         private readonly IEnderecoFuncionarioService _enderecoFuncionarioService; // Injeção de dependencia
@@ -11,8 +11,8 @@
             _enderecoFuncionarioService = enderecoFuncionarioService;
         }
 
-        [HttpPost("Adicionar")]
-        public IActionResult AdicionarEnderecosFuncionarios([FromBody] EnderecoFuncionario enderecoFuncionario)
+        [HttpPost("adicionar")]
+        public async Task <IActionResult> AdicionarEnderecosFuncionariosAsync([FromBody] EnderecoFuncionario enderecoFuncionario)
         {
             if (!ModelState.IsValid)
             {
@@ -21,7 +21,7 @@
 
             try
             {
-                _enderecoFuncionarioService.CriarEnderecoFuncionario(enderecoFuncionario);
+                await _enderecoFuncionarioService.CriarEnderecoFuncionarioAsync(enderecoFuncionario);
                 return StatusCode(StatusCodes.Status201Created, enderecoFuncionario);
             }
 
@@ -30,13 +30,22 @@
                 return StatusCode(StatusCodes.Status500InternalServerError, ex + "Erro interno ao adicionar o endereço.");
             }
         }
-        [HttpGet("Obter")]
 
-        public ActionResult<IEnumerable<EnderecoFuncionario>> ObterTodosEnderecosFuncionarios()
+
+        [HttpGet("obter/{id}")]
+        public async Task <EnderecoFuncionario> ObterEnderecoFuncionarioAsync(int id) 
+        {
+            var enderecoFuncionario = await _enderecoFuncionarioService.LerEnderecoFuncionarioAsync(id);
+            return enderecoFuncionario;        
+        }
+
+        [HttpGet("obter-todos")]
+
+        public async Task<ActionResult<IEnumerable<EnderecoFuncionario>>> ObterTodosEnderecosFuncionarios()
         {
             try
             {
-                IEnumerable<EnderecoFuncionario> enderecos = _enderecoFuncionarioService.LerTodosOsEnderecosFuncionarios();
+                IEnumerable<EnderecoFuncionario> enderecos = await _enderecoFuncionarioService.LerTodosOsEnderecosFuncionariosAsync();
                 return Ok(enderecos);
             }
 
@@ -47,16 +56,16 @@
 
         }
 
-        [HttpPut("Atualizar")]
+        [HttpPut("atualizar")]
 
-        public IActionResult AtualizarEnderecoFuncionarios([FromBody] EnderecoFuncionario enderecoFuncionario)
+        public async Task <IActionResult> AtualizarEnderecoFuncionarios([FromBody] EnderecoFuncionario enderecoFuncionario)
         {
             if (enderecoFuncionario == null)
                 return BadRequest(ModelState);
 
             try
             {
-                _enderecoFuncionarioService.AtualizarEnderecoFuncionario(enderecoFuncionario);
+                await _enderecoFuncionarioService.AtualizarEnderecoFuncionarioAsync(enderecoFuncionario);
                 return Ok(enderecoFuncionario);
             }
 
@@ -67,16 +76,18 @@
             }
         }
 
-        [HttpDelete("Apagar")]
+        [HttpDelete("apagar/{id}")]
 
-        public IActionResult ApagarEnderecoFuncionarios([FromBody] EnderecoFuncionario enderecoFuncionario)
+        public async Task <IActionResult> ApagarEnderecoFuncionarios([FromBody] int id)
         {
+            Task enderecoFuncionario = _enderecoFuncionarioService.LerEnderecoFuncionarioAsync(id);
+
             if (enderecoFuncionario == null)
                 return BadRequest(ModelState);
 
             try
             {
-                _enderecoFuncionarioService.ApagarEnderecoFuncionario(enderecoFuncionario);
+                await _enderecoFuncionarioService.ApagarEnderecoFuncionarioAsync(id);
                 return NoContent();
             }
 

@@ -11,31 +11,34 @@ public class EnderecoFuncionarioRepository : IEnderecoFuncionarioRepository
     }
 
 
-    public void CreateEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal)
+    public async Task<EnderecoFuncionario> CreateEnderecoFuncionarioAsync(EnderecoFuncionario enderecoFuncionarioFinal)
     {
         _context.EnderecoFuncionarios.Add(enderecoFuncionarioFinal);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
+        return enderecoFuncionarioFinal;
     }
 
-    public EnderecoFuncionario? ReadEnderecoFuncionario(int id)
+    public async Task<EnderecoFuncionario> ReadEnderecoFuncionarioAsync(int id)
     {
-        return _context.EnderecoFuncionarios.Find(id);
+        return await _context.EnderecoFuncionarios.FindAsync(id);
     }
     
-    public IEnumerable<EnderecoFuncionario> ReadAllEnderecoFuncionario()
+    public async Task <IEnumerable<EnderecoFuncionario>> ReadAllEnderecoFuncionarioAsync()
     {
-        return _context.EnderecoFuncionarios;
+        return await _context.EnderecoFuncionarios.ToListAsync();
     }
 
-    public bool UpdateEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal)
+    public async Task<EnderecoFuncionario> UpdateEnderecoFuncionarioAsync(EnderecoFuncionario enderecoFuncionarioFinal)
     {
         _context.EnderecoFuncionarios.Update(enderecoFuncionarioFinal);
-        return _context.SaveChanges() > 0;
+        await _context.SaveChangesAsync();
+        return enderecoFuncionarioFinal;
     }
-    public bool DeleteEnderecoFuncionario(EnderecoFuncionario enderecoFuncionarioFinal)
+    public async Task <bool> DeleteEnderecoFuncionarioAsync(int id)
     {
+        EnderecoFuncionario enderecoFuncionarioFinal = await _context.EnderecoFuncionarios.FindAsync(id);
         _context.EnderecoFuncionarios.Remove(enderecoFuncionarioFinal);
-        return _context.SaveChanges() > 0;
+        return await _context.SaveChangesAsync() > 0;
 
     }
 

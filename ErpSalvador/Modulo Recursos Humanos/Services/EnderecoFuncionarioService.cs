@@ -1,7 +1,4 @@
-﻿    
-using System.Collections.Generic;
-
-namespace ErpSalvador.Services
+﻿namespace ErpSalvador.Services
 {
     public class EnderecoFuncionarioService : IEnderecoFuncionarioService
     {
@@ -13,33 +10,29 @@ namespace ErpSalvador.Services
             _enderecoFuncionarioRepository = enderecoFuncionarioRepository;
         }
 
-
-
-        public EnderecoFuncionario ValidarEnderecoFuncionario(EnderecoFuncionario validarEnderecoFuncionario)
+        public EnderecoFuncionario ValidarEnderecoFuncionario(EnderecoFuncionario enderecoFuncionario)
         {
 
-            if (string.IsNullOrEmpty(validarEnderecoFuncionario.NomeRua))
-                throw new ArgumentException("O nome da rua deve ser informado", nameof(validarEnderecoFuncionario.NomeRua));
+            if (string.IsNullOrEmpty(enderecoFuncionario.NomeRua))
+                throw new ArgumentException("o nome da Rua deve ser informada", nameof(enderecoFuncionario.NomeRua));
+            if (string.IsNullOrEmpty(enderecoFuncionario.NumeroCep))
+                throw new ArgumentException("O número do CEP deve ser informado", nameof(enderecoFuncionario.NumeroCep));
 
-
-            if (string.IsNullOrEmpty(validarEnderecoFuncionario.NumeroCep))
-                throw new ArgumentException("O número do CEP deve ser informado", nameof(validarEnderecoFuncionario.NumeroCep));
-
-            return (validarEnderecoFuncionario);
-
+            else return (enderecoFuncionario);
         }
 
 
-        public void CriarEnderecoFuncionario(EnderecoFuncionario enderecoFuncionario)
+        public async Task<EnderecoFuncionario> CriarEnderecoFuncionarioAsync(EnderecoFuncionario enderecoFuncionario)
         {
             ValidarEnderecoFuncionario(enderecoFuncionario);
 
-            _enderecoFuncionarioRepository.CreateEnderecoFuncionario(enderecoFuncionario);
+            await _enderecoFuncionarioRepository.CreateEnderecoFuncionarioAsync(enderecoFuncionario);
+            return (enderecoFuncionario);
         }
 
-        public EnderecoFuncionario LerEnderecoFuncionario(EnderecoFuncionario enderecoFuncionario)
+        public  Task <EnderecoFuncionario> LerEnderecoFuncionarioAsync(int id)
         {
-            var buscandoEndereco = _enderecoFuncionarioRepository.ReadEnderecoFuncionario(enderecoFuncionario.Id.Value);
+            var buscandoEndereco = _enderecoFuncionarioRepository.ReadEnderecoFuncionarioAsync(id);
 
             if (buscandoEndereco == null)
             {
@@ -53,32 +46,25 @@ namespace ErpSalvador.Services
 
         }
 
-        public IEnumerable<EnderecoFuncionario> LerTodosOsEnderecosFuncionarios() 
+        public async Task<IEnumerable<EnderecoFuncionario>> LerTodosOsEnderecosFuncionariosAsync() 
         {
-            var todosOsEnderecos = _enderecoFuncionarioRepository.ReadAllEnderecoFuncionario();
+            var todosOsEnderecos = await _enderecoFuncionarioRepository.ReadAllEnderecoFuncionarioAsync();
             return todosOsEnderecos;
         } 
 
-
-
-
-
-
-
-
-        public bool AtualizarEnderecoFuncionario(EnderecoFuncionario enderecoFuncionario)
+        public async Task<EnderecoFuncionario> AtualizarEnderecoFuncionarioAsync(EnderecoFuncionario enderecoFuncionario)
         {
             ValidarEnderecoFuncionario(enderecoFuncionario);
 
-            bool RetornoOperacao = _enderecoFuncionarioRepository.UpdateEnderecoFuncionario(enderecoFuncionario);
+            EnderecoFuncionario RetornoOperacao = await _enderecoFuncionarioRepository.UpdateEnderecoFuncionarioAsync(enderecoFuncionario);
             return RetornoOperacao;
         }
 
 
-        public bool ApagarEnderecoFuncionario(EnderecoFuncionario enderecoFuncionario)
+        public async Task <bool> ApagarEnderecoFuncionarioAsync(int id)
         {
-            bool RetornoOperacao = _enderecoFuncionarioRepository.DeleteEnderecoFuncionario(enderecoFuncionario);
-            return RetornoOperacao;
+            Task <bool> RetornoOperacao = _enderecoFuncionarioRepository.DeleteEnderecoFuncionarioAsync(id);
+            return await RetornoOperacao;
         }
 
     }

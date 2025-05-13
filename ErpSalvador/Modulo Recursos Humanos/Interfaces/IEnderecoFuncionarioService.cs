@@ -2,17 +2,16 @@
 {
     public interface IEnderecoFuncionarioService
     {
-        void ValidarEnderecoFuncionario() { }
+        public EnderecoFuncionario ValidarEnderecoFuncionario(EnderecoFuncionario enderecoFuncionario);
 
-        void CriarEnderecoFuncionario(EnderecoFuncionario enderecoFuncionario) { }
+        Task<EnderecoFuncionario> CriarEnderecoFuncionarioAsync(EnderecoFuncionario enderecoFuncionario);
 
-        EnderecoFuncionario LerEnderecoFuncionario(EnderecoFuncionario enderecoFuncionario);
+        Task <EnderecoFuncionario> LerEnderecoFuncionarioAsync(int id);
 
-        IEnumerable<EnderecoFuncionario> LerTodosOsEnderecosFuncionarios();
+        Task <IEnumerable<EnderecoFuncionario>> LerTodosOsEnderecosFuncionariosAsync();
 
-        bool AtualizarEnderecoFuncionario(EnderecoFuncionario enderecoFuncionario);
+        Task <EnderecoFuncionario> AtualizarEnderecoFuncionarioAsync(EnderecoFuncionario enderecoFuncionario);
 
-        bool ApagarEnderecoFuncionario(EnderecoFuncionario enderecoFuncionario);
-
+        Task <bool> ApagarEnderecoFuncionarioAsync(int id);
     }
 }
